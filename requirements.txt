@@ -5,3 +5,4 @@ langchain
 clarifai
 python-dotenv
 openai
+trulens_eval 
