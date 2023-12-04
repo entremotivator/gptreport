@@ -28,6 +28,11 @@ with st.sidebar:
     langsmith_api_key = st.text_input("LangSmith API Key", type="password", value="Your_LangSmith_API_Key_Here")
     st.markdown("Replace 'Your_LangSmith_API_Key_Here' with your actual LangSmith API key.")
 
+# Sidebar for TruLens API key input
+with st.sidebar:
+    trulens_api_key = st.text_input("TruLens API Key", type="password", value="Your_TruLens_API_Key_Here")
+    st.markdown("Replace 'Your_TruLens_API_Key_Here' with your actual TruLens API key.")
+
 # Check if OpenAI API key is provided
 if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.")
