@@ -25,7 +25,7 @@ with st.sidebar:
 
 # Sidebar for LangSmith API key input
 with st.sidebar:
-    langsmith_api_key = st.text_input("LangSmith API Key", type="password")
+    langsmith_api_key = st.text_input("LangSmith API Key", type="password", value="Your_LangSmith_API_Key_Here")
     st.markdown("Replace 'Your_LangSmith_API_Key_Here' with your actual LangSmith API key.")
 
 # Check if OpenAI API key is provided
@@ -37,6 +37,33 @@ else:
         llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key)
         st.info(llm(input_text))
 
+    # TruLens Quickstart code (replace with your specific code)
+    with st.beta_expander("TruLens Features"):
+        # Feature 1: Groundedness Evaluation
+        feedback_groundedness = Feedback(Groundedness())
+        groundedness_score = Tru.evaluate(llm, feedback_groundedness)
+        st.write(f"1. Groundedness Score: {groundedness_score}")
+
+        # Feature 2: Coherence Analysis
+        feedback_coherence = Feedback("Evaluate coherence and flow.")
+        coherence_score = Tru.evaluate(llm, feedback_coherence)
+        st.write(f"2. Coherence Score: {coherence_score}")
+
+        # Feature 3: Novelty Assessment
+        feedback_novelty = Feedback("Assess the novelty of generated content.")
+        novelty_score = Tru.evaluate(llm, feedback_novelty)
+        st.write(f"3. Novelty Score: {novelty_score}")
+
+        # Feature 4: Specificity Evaluation
+        feedback_specificity = Feedback("Check for specificity and detail in responses.")
+        specificity_score = Tru.evaluate(llm, feedback_specificity)
+        st.write(f"4. Specificity Score: {specificity_score}")
+
+        # Feature 5: Diversity Analysis
+        feedback_diversity = Feedback("Analyze the diversity of generated responses.")
+        diversity_score = Tru.evaluate(llm, feedback_diversity)
+        st.write(f"5. Diversity Score: {diversity_score}")
+
     # Streamlit form for input text and response generation
     with st.form("my_form"):
         text = st.text_area("Enter text:", "What are 3 key pieces of advice for learning how to code?")
@@ -45,8 +72,3 @@ else:
         # Check if the form is submitted
         if submitted:
             generate_response(text)
-
-# TruLens Quickstart code (insert your specific code here)
-
-# Additional Streamlit components or visualization can be added here
-
