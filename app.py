@@ -4,6 +4,11 @@ from trulens_eval import Tru, Feedback, Select
 from trulens_eval.feedback import Groundedness
 from trulens_eval.feedback.provider.openai import OpenAI as fOpenAI
 import numpy as np
+import pandas as pd
+
+# Initialize session_state to store chat history
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = []
 
 st.title("📊 LLM Report Card")
 
@@ -40,7 +45,11 @@ else:
     # Langchain LLMS function for generating responses
     def generate_response(input_text):
         llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key)
-        st.info(llm(input_text))
+        response = llm(input_text)
+        st.info(response)
+
+        # Append conversation to chat history
+        st.session_state.chat_history.append({'User': input_text, 'LLM': response})
 
     # TruLens Quickstart code (replace with your specific code)
     with st.beta_expander("TruLens Features"):
@@ -68,6 +77,15 @@ else:
         feedback_diversity = Feedback("Analyze the diversity of generated responses.")
         diversity_score = Tru.evaluate(llm, feedback_diversity)
         st.write(f"5. Diversity Score: {diversity_score}")
+
+    # Display chat history
+    st.subheader("Chat History")
+    chat_df = pd.DataFrame(st.session_state.chat_history)
+    st.dataframe(chat_df)
+
+    # Download chat history as CSV
+    download_link = f'<a href="data:text/csv;charset=utf-8,{chat_df.to_csv(index=False)}" download="chat_history.csv">Download Chat History</a>'
+    st.markdown(download_link, unsafe_allow_html=True)
 
     # Streamlit form for input text and response generation
     with st.form("my_form"):
