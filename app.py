@@ -12,6 +12,16 @@ with st.sidebar:
     openai_api_key = st.text_input("OpenAI API Key", type="password")
     st.markdown("[Get an OpenAI API key](https://platform.openai.com/account/api-keys)")
 
+# Sidebar for Google Vortex API key input
+with st.sidebar:
+    google_vortex_api_key = st.text_input("Google Vortex API Key", type="password")
+    st.markdown("Get your Google Vortex API key from the Google Cloud Console.")
+
+# Sidebar for LangSmith API key input
+with st.sidebar:
+    langsmith_api_key = st.text_input("LangSmith API Key", type="password")
+    st.markdown("Replace 'Your_LangSmith_API_Key_Here' with your actual LangSmith API key.")
+
 # Check if OpenAI API key is provided
 if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.")
@@ -30,7 +40,6 @@ else:
         if submitted:
             generate_response(text)
 
-# TruLens Quickstart code (without running it)
-# ... (Your TruLens Quickstart code here)
+# TruLens Quickstart code (insert your specific code here)
 
 # Additional Streamlit components or visualization can be added here
